@@ -96,16 +96,15 @@
             position: 'topleft'
         }).addTo(map);
         L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
-        // Event listener for location found
-    map.on('locationfound', function(e) {
-      const latlng = e.latlng; // User's latitude and longitude
+          // Add a marker at the user's location
+          const marker = L.marker([latitude, longitude]).addTo(map);
 
-      // Create and display a popup at the user's location
-      L.popup()
-        .setLatLng(latlng)
-        .setContent(`<b>Your Location:</b><br>Lat: ${latlng.lat.toFixed(5)}, Lng: ${latlng.lng.toFixed(5)}`)
-        .openOn(map);
-    });
+          // Add a popup to the marker with user info
+          marker.bindPopup(`<b>You are here!</b><br>Latitude: ${latitude}<br>Longitude: ${longitude}`).openPopup();
+
+          // Add an event listener to show a custom popup when the map is clicked
+          map.on('click', showCustomPopup);
+    
         var measureControl = new L.Control.Measure({
             position: 'topleft',
             primaryLengthUnit: 'meters',
